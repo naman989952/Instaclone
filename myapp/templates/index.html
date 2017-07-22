@@ -12,18 +12,17 @@
             font-size: 35px;
         }
         h4 {
-            color: coral;
+            color: maroon;
         }
         label {
             color: #B61493;
             font-size: 20px;
             color: chocolate;
+            padding: 10px 10px 10px 10px;
         }
         body {
             text-align: center;
-            background: url("http://i.imgur.com/ek3e2Kg.jpg");
-            background-size: cover;
-            background-position: center;
+            background: burlywood;
         }
         div {
             display: block;
@@ -35,7 +34,8 @@
             height: 25px;
             background: khaki;
             border: 0px;
-            padding: 5px;
+            padding: 10px 10px 10px 10px;
+            margin-bottom: 10px;
         }
         input[type="password"] {
             font-size: smaller;
@@ -43,7 +43,7 @@
             height: 25px;
             background: khaki;
             border: 0px;
-            padding: 5px;
+            padding: 10px 10px 10px 10px;
         }
         input[type="submit"] {
             background: red;
@@ -53,6 +53,8 @@
             border-radius: 15%;
             font-size: 18px;
             padding: 5px;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
         a {
             font-size: 18px;
@@ -62,6 +64,11 @@
             height: 100px;
             width: 100px;
             border-radius: 20px;
+        }
+        table{
+            border: solid;
+            border-color: darkslategrey;
+            padding: 10px 10px 10px 10px;
         }
     </style>
 </head>
@@ -105,17 +112,9 @@
                    <td><input id="password" type="password" name="password" placeholder="Enter the password" value="{{password}}"></td>
                </div>
             </tr>
-
-            <tr>
-                <td><input type="submit" value="Sign Up"></td>
-            </tr>
-
-            <tr>
-                <td><label for="login">Already registered?<a href="/login/">Login</a></label></td>
-            </tr>
-
-        </table>
-
+            </table>
+        <input type="submit" value="Sign Up"><br>
+        <label for="login">Already registered?<a href="/login/">Login</a></label>
     </form>
 
 </body>
