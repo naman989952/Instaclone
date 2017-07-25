@@ -2,10 +2,12 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
-from models import UserModel, SessionToken, PostModel
+from models import UserModel, SessionToken, PostModel, LikeModel, CommentModel
 from datetime import datetime
+from datetime import timedelta
+from django.utils import timezone
 from Instaclone.settings import BASE_DIR
-from forms import SignUpForm, LoginForm, PostForm
+from forms import SignUpForm, LoginForm, PostForm, LikeForm, CommentForm
 from imgurpython import ImgurClient
 
 # Create your views here.
@@ -92,10 +94,48 @@ def post_view(request):
         return redirect('login/')
 
 
+
+def like_view(request):
+    user = check_validation(request)
+    if user and request.method == "POST":
+        form = LikeForm(request.POST)
+        if form.is_valid():
+            post_id = form.cleaned_data.get('post').id
+            existing_like = LikeModel.objects.filter(post_id=post_id, user=user).first()
+            if not existing_like:
+                LikeModel.objects.create(post_id=post_id, user=user)
+            else:
+                existing_like.delete()
+            return redirect('/feed/')
+    else:
+        return redirect('login/')
+
+
+
+
+def comment_view(request):
+    user = check_validation(request)
+    if user and request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            post_id = form.cleaned_data.get('post').id
+            comment_text = form.cleaned_data.get('comment_text')
+            comment = CommentModel.objects.create(user=user, post_id=post_id, comment_text=comment_text)
+            comment.save()
+            return redirect('/feed/')
+        else:
+            return redirect('/feed/')
+    else:
+        return redirect('login/')
+
+
+
 def check_validation(request):
     if request.COOKIES.get('session_token'):
         session = SessionToken.objects.filter(session_token=request.COOKIES.get('session_token')).first()
         if session:
-            return session.user
+            time_to_live = session.created_on + timedelta(days=1)
+            if time_to_live > timezone.now():
+                return session.user
     else:
         return None
