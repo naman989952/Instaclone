@@ -31,8 +31,8 @@ def signup_view(request):
     elif request.method == "GET":
         form = SignUpForm()
         today = datetime.now()
-
     return render(request, 'index.html', {'today': today, 'form': form})
+
 
 
 def login_view(request):
@@ -57,9 +57,10 @@ def login_view(request):
                     response_data['message'] = "Invalid Password! Please try again!!!"
     elif request.method == "GET":
         form = LoginForm()
-
     response_data['form'] = form
     return render(request, 'login.html', response_data)
+
+
 
 def feed_view(request):
     user = check_validation(request)
@@ -69,9 +70,10 @@ def feed_view(request):
     else:
         return redirect('login/')
 
+
+
 def post_view(request):
     user = check_validation(request)
-
     if user:
         if request.method == 'POST':
             form = PostForm(request.POST, request.FILES)
@@ -109,7 +111,6 @@ def like_view(request):
             return redirect('/feed/')
     else:
         return redirect('login/')
-
 
 
 
