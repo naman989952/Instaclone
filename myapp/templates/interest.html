@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interest</title>
+    <h1>User Interest</h1>
+</head>
+<style>
+    h1 {
+        font-size: 80px;
+        color: goldenrod;
+    }
+    body {
+        color: mediumslateblue;
+        background: burlywood;
+        text-align: center;
+    }
+</style>
+<body>
+    <p align="left">
+        <font size="12px"> According to the recent post, the user seems to be interested in the following:-</font><br>
+        {% for list in l %}
+            <li type="circle" align="left"><font size="20px"> {{ list }}</font></li>
+        {% endfor %}
+    </p>
+
+</body>
+</html>

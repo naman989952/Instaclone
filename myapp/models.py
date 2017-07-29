@@ -85,8 +85,13 @@ class LikeModel(models.Model):
 
 # Create a model for adding a comment
 class CommentModel(models.Model):
+    #user field
     user = models.ForeignKey(UserModel)
+    #post field
     post = models.ForeignKey(PostModel)
+    #comment-text field
     comment_text = models.CharField(max_length=555)
+    #created-on field
     created_on = models.DateTimeField(auto_now_add=True)
+    #updated-on field
     updated_on = models.DateField(auto_now=True)
