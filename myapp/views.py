@@ -12,7 +12,9 @@ from imgurpython import ImgurClient
 from clarifai.rest import ClarifaiApp
 from clarifai.rest import Image as ClImage
 
+
 app = ClarifaiApp(api_key='a54c33892b594bed9527ad985f7f63cf')
+
 
 
 # Create your views here.
@@ -27,16 +29,25 @@ def signup_view(request):
             password = form.cleaned_data['password']
             print 'Here'
             #saving data to DB
-            user = UserModel(full_name=name, password=make_password(password), email=email, username=username)
-            user.save()
-            return render(request, 'success.html')
+            empty = len(username) ==0 and len(password) == 0
+            if len(username) >= 4 and len(password) >= 3:
+                user = UserModel(full_name=name, password=make_password(password), email=email, username=username)
+                user.save()
+                return render(request, 'success.html')
+            else:
+                text = {}
+                text = "Username or password is not long enough"
+                return render(request, 'index.html', {'text': text})
             #return redirect('login/')
+
         else:
             form = SignUpForm()
     elif request.method == "GET":
         form = SignUpForm()
         today = datetime.now()
     return render(request, 'index.html', {'today': today, 'form': form})
+
+
 
 
 # create view for login
@@ -76,6 +87,8 @@ def login_view(request):
     return render(request, 'login.html', response_data)
 
 
+
+
 # create view for feed
 def feed_view(request):
     # check if user is valid
@@ -89,6 +102,8 @@ def feed_view(request):
     else:
         # redirect to login page
         return redirect('login/')
+
+
 
 
 # create view for post
@@ -128,6 +143,8 @@ def post_view(request):
     else:
         # redirect to login page
         return redirect('login/')
+
+
 
 
 
@@ -177,13 +194,10 @@ def comment_view(request):
         return redirect('login/')
 
 
+
+
 #create view for interest
 def interest_view(request):
-    '''
-    tag_list = []
-    image_url = PostModel.image_url
-    image_url = query.image_url
-    '''
     # define list for urls
     urls = []
     # define list for images
@@ -276,6 +290,7 @@ def interest_view(request):
 def logout_view(request):
     #load logout page
     return render(request,'logout.html')
+
 
 
 
