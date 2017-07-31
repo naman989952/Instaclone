@@ -19,6 +19,7 @@
         height: 30px;
         font-size: 20px;
     }
+
     input[type="text"] {
         border: 0px;
         border-radius: 5%;
@@ -94,7 +95,16 @@
             </p>
             {% endfor %}
         </div>
-        <br><br><br><br>
+        <br>
+        {% for comment in post.comments %}
+        <form method="post" action="upvote/">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{comment.id}}">
+            <input type="submit" class="btn btn-default" value="Upvote">
+        </form>
+        <span>Upvotes: {{ comment.upvote_count }}</span>
+        {% endfor %}
+        <br><br><br>
         <hr>
     {% endfor %}
 

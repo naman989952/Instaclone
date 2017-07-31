@@ -10,8 +10,6 @@ from Instaclone.settings import BASE_DIR
 from forms import SignUpForm, LoginForm, PostForm, LikeForm, CommentForm
 from imgurpython import ImgurClient
 from clarifai.rest import ClarifaiApp
-from clarifai.rest import Image as ClImage
-
 
 app = ClarifaiApp(api_key='a54c33892b594bed9527ad985f7f63cf')
 
@@ -134,6 +132,7 @@ def post_view(request):
                 post.save()
                 # display image url
                 print "Image URL:" + post.image_url
+                message = {"Post added successfully"}
                 # redirect to feeds page
                 return redirect('/feed/')
             else:
@@ -293,14 +292,11 @@ def logout_view(request):
 
 
 
-
 #create a view for checking validation
 def check_validation(request):
     if request.COOKIES.get('session_token'):
         session = SessionToken.objects.filter(session_token=request.COOKIES.get('session_token')).first()
         if session:
-            time_to_live = session.created_on + timedelta(days=1)
-            if time_to_live > timezone.now():
-                return session.user
+            return session.user
     else:
         return None
