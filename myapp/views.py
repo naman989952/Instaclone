@@ -10,7 +10,7 @@ from Instaclone.settings import BASE_DIR
 from forms import SignUpForm, LoginForm, PostForm, LikeForm, CommentForm
 from imgurpython import ImgurClient
 from clarifai.rest import ClarifaiApp
-
+from enum import Enum
 app = ClarifaiApp(api_key='a54c33892b594bed9527ad985f7f63cf')
 
 
